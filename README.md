@@ -11,7 +11,9 @@ Companion code and anonymised data for IEEE Latin America Transactions manuscrip
 | `data/datos_wifi_curated_anon.parquet` | Anonymised curated scans (53,371 rows) |
 | `data/DATA_DICTIONARY.md` | Field descriptions |
 | `data/qc_report.json` | QC summary for the released parquet |
-| `notebooks/01_eda_wifi.ipynb` | English EDA notebook (relative paths) |
+| `notebooks/01_eda_wifi.ipynb` | English EDA notebook (executed outputs) |
+| `notebooks/02_paper_results_view.ipynb` | View-only key manuscript tables/figures (no training) |
+| `experiments/paper_key_results.json` | Locked paper numbers (`invented=false`) |
 | `src/` | Minimal training/evaluation source used in the paper |
 | `experiments/configs`, `experiments/manifests` | Experiment configuration |
 | `experiments/EXPERIMENT_LOG.md` | Short English experiment notes for the paper |
