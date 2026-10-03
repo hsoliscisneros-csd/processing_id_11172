@@ -24,6 +24,7 @@ env/
 
 # Local experiment outputs / caches
 experiments/outputs/
+data/graphs/
 reports/figures/
 *.log
 .cache/

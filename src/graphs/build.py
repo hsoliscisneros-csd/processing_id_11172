@@ -7,7 +7,6 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-import h3
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -28,7 +27,7 @@ def _safe_mode(series: pd.Series, default: str = "") -> str:
 
 def _ap_node_attrs(grp: pd.DataFrame) -> dict:
     return {
-        "ssid_mode": _safe_mode(grp["ssid"]),
+        "ssid_mode": _safe_mode(grp["ssid"]) if "ssid" in grp.columns else "",
         "vendor_mode": _safe_mode(grp["vendor"]),
         "security_mode": _safe_mode(grp["security_type"]),
         "level_mean": float(grp["level"].mean()),
@@ -89,6 +88,8 @@ def build_spatial_graph(
     h3_resolution: int = DEFAULT_H3_RES,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """H3 location nodes + ADJACENT edges between grid neighbors."""
+    import h3  # optional dependency; only needed for spatial graphs
+
     geo = df.dropna(subset=["latitude", "longitude"]).copy()
     geo["h3_index"] = geo.apply(
         lambda r: h3.latlng_to_cell(r["latitude"], r["longitude"], h3_resolution),
