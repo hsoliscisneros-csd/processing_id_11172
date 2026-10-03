@@ -1,0 +1,11 @@
+# Track A — PhysAgg ablation (non_isolate, temporal)
+track: A
+subgraph: non_isolate
+features: graph
+edge_weight: combined
+lambda1: 0.3
+lambda2: 0.01
+runs: [A0, A1, A2, A3]
+notes: >
+  A0 SAGE | A1 PiSAGE loss-only | A2 PhysAgg operator | A3 PhysAgg+L_phys
+  Gate H-A: A2/A3 > A1 en PR-AUC

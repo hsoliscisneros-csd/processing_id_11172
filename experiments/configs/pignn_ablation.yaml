@@ -1,0 +1,35 @@
+# EXP-06 ablation A0–A3
+input: data/datos_wifi_curated_anon.parquet
+graph_dir: data/graphs/physical
+output_dir: experiments/outputs/gnn/pignn
+
+model: sage
+features: graph
+subgraph: non_isolate
+edge_mode: train
+edge_weight: combined
+
+epochs: 200
+patience: 20
+lr: 0.001
+hidden: 64
+dropout: 0.3
+seed: 42
+
+variants:
+  A0:
+    lambda_physics: 0.0
+    lambda_smooth: 0.0
+    note: GNN base (control)
+  A1:
+    lambda_physics: 0.1
+    lambda_smooth: 0.0
+    note: Solo restriccion fisica
+  A2:
+    lambda_physics: 0.0
+    lambda_smooth: 0.1
+    note: Solo smoothness NEARBY
+  A3:
+    lambda_physics: 0.1
+    lambda_smooth: 0.1
+    note: PI-GNN completo

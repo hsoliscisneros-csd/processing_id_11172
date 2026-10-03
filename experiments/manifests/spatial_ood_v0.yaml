@@ -1,0 +1,105 @@
+version: v0
+created: '2026-07-20'
+track: C
+data: data/datos_wifi_curated_anon.parquet
+state_filter: Chiapas
+label: is_anomaly_heuristic
+metrics_primary: pr_auc
+subgraph_default: non_isolate
+protocols:
+  P1_muni_holdout:
+    type: municipality_holdout
+    train_municipalities: &id001
+    - Tuxtla Gutiérrez
+    - Suchiapa
+    - Chiapa de Corzo
+    - Jardines del Grijalva
+    val_municipalities:
+    - Las Flechas
+    test: all_other_municipalities_in_state
+    notes: Mismo protocolo EXP-06 / physagg --split spatial
+    known_issue: val Las Flechas ~435 obs / ~57 nodos noniso — umbral inestable
+  P2_loo_metro:
+    type: leave_one_municipality_out
+    pool: *id001
+    min_val_obs: 200
+    test: municipalities_outside_pool
+    fn: src.evaluation.splits.spatial_loo_folds
+  P3_grid_2x2:
+    type: geo_grid
+    lat_median: 16.730386
+    lon_median: -93.089303
+    grid_stats:
+    - grid_id: '0_0'
+      n_obs: 8325
+      n_bssid: 4884
+    - grid_id: '0_1'
+      n_obs: 15859
+      n_bssid: 7263
+    - grid_id: '1_0'
+      n_obs: 15831
+      n_bssid: 14107
+    - grid_id: '1_1'
+      n_obs: 8359
+      n_bssid: 5548
+    suggested:
+      train_grids:
+      - '1_0'
+      - '1_1'
+      val_grids:
+      - '0_1'
+      test_grids:
+      - '0_0'
+    assignment: bssid_median_latlon_one_grid
+    status: stress_test
+    notes: non_isolate → n_test≈0 (sin aristas train hacia OOD). subgraph=all → n_test=4733
+      pero modelos colapsan (PR-AUC=prevalencia, ROC=0.5). P3 documenta límite inductivo;
+      protocolo paper = P1.
+gate_H_C:
+  description: Gap espacial Δ = PR-AUC_temporal - PR-AUC_spatial
+  pass_if: method reduces Δ by ≥10% relative vs A0 SAGE, or wins in ≥2 LOO folds
+  baseline_ref: experiments/outputs/physagg + physagg/spatial
+models_to_score:
+- A0
+- A1
+- A2
+- A3
+entrypoints:
+  physagg_spatial: python -m src.train.physagg --run all --split spatial --output
+    experiments/outputs/physagg/spatial
+  ood_report: python -m src.train.ood_eval
+  rebuild_manifest: python scripts/build_spatial_ood_manifest.py
+n_municipalities: 42
+top_municipalities:
+- municipality: Tuxtla Gutiérrez
+  n_obs: 22409
+  n_bssid: 18989
+  anomaly_rate: 0.24748984782899727
+- municipality: Suchiapa
+  n_obs: 11050
+  n_bssid: 5368
+  anomaly_rate: 0.21846153846153846
+- municipality: Chiapa de Corzo
+  n_obs: 7382
+  n_bssid: 4203
+  anomaly_rate: 0.14318612842048226
+- municipality: Jardines del Grijalva
+  n_obs: 3791
+  n_bssid: 1942
+  anomaly_rate: 0.040886309680823005
+- municipality: Las Flechas
+  n_obs: 435
+  n_bssid: 293
+  anomaly_rate: 0.10114942528735632
+- municipality: .nan
+  n_obs: 434
+  n_bssid: 338
+  anomaly_rate: 0.10368663594470046
+- municipality: Arriaga
+  n_obs: 365
+  n_bssid: 365
+  anomaly_rate: 0.11506849315068493
+- municipality: Emiliano Zapata Uno
+  n_obs: 327
+  n_bssid: 114
+  anomaly_rate: 0.0856269113149847

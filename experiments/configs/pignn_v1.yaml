@@ -1,0 +1,21 @@
+# PI-GNN default (variant A3)
+variant: A1
+lambda_physics: 0.3
+lambda_smooth: 0.01
+
+model: sage
+features: graph
+subgraph: non_isolate
+edge_mode: train
+edge_weight: combined
+
+input: data/datos_wifi_curated_anon.parquet
+graph_dir: data/graphs/physical
+output_dir: experiments/outputs/gnn/pignn
+
+epochs: 200
+patience: 20
+lr: 0.001
+hidden: 64
+dropout: 0.3
+seed: 42

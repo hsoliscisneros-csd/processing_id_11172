@@ -1,0 +1,18 @@
+# PhysAgg-R power config
+subgraph: non_isolate
+features: graph
+edge_weight: combined
+lambda1: 0.3
+lambda2: 0.01
+lambda_edge: 0.3
+lr: 0.001
+p0: -45.0
+seeds: [42, 0, 1, 2, 3]
+runs: [A0, A1, A2, A2e, A3]
+spatial_val: robust
+grid_min:
+  lambda_edge: [0.1, 0.3]
+  edge_weight: [proximity, combined]
+notes: >
+  A2e = PhysAgg + L_edge RSSI residual.
+  Val espacial robust = Suchiapa (no Las Flechas).

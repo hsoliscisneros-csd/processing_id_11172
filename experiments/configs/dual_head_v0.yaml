@@ -1,0 +1,12 @@
+# Track B — DualHeadDetector (grafo completo)
+model: dual
+ablation: dual
+edges: train
+features: graph
+edge_weight: combined
+subgraph: all
+seed: 42
+notes: >
+  Sprint 1. Comparar dual vs sage_full vs mlp_full.
+  Gate: PR-AUC test completo > max(RF nodo 0.602, SAGE full 0.469) + 0.02
+  y dual > partes.

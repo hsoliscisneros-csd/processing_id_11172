@@ -1,0 +1,21 @@
+# EXP-06 A4 — lambda grid (temporal split)
+input: data/datos_wifi_curated_anon.parquet
+graph_dir: data/graphs/physical
+output_dir: experiments/outputs/gnn/pignn/grid
+
+split: temporal
+model: sage
+features: graph
+subgraph: non_isolate
+edge_mode: train
+edge_weight: combined
+
+epochs: 200
+patience: 20
+lr: 0.001
+hidden: 64
+seed: 42
+
+grid:
+  lambda_physics: [0.01, 0.1, 0.3, 1.0]
+  lambda_smooth: [0.01, 0.1, 0.3, 1.0]

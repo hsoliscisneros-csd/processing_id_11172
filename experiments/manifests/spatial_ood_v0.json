@@ -1,0 +1,435 @@
+{
+  "version": "v0",
+  "created": "2026-07-20",
+  "track": "C",
+  "data": "data/datos_wifi_curated_anon.parquet",
+  "state_filter": "Chiapas",
+  "label": "is_anomaly_heuristic",
+  "metrics_primary": "pr_auc",
+  "subgraph_default": "non_isolate",
+  "protocols": {
+    "P1_muni_holdout": {
+      "type": "municipality_holdout",
+      "train_municipalities": [
+        "Tuxtla Gutiérrez",
+        "Suchiapa",
+        "Chiapa de Corzo",
+        "Jardines del Grijalva"
+      ],
+      "val_municipalities": [
+        "Las Flechas"
+      ],
+      "test": "all_other_municipalities_in_state",
+      "notes": "Mismo protocolo EXP-06 / physagg --split spatial",
+      "known_issue": "val Las Flechas ~435 obs / ~57 nodos noniso — umbral inestable"
+    },
+    "P2_loo_metro": {
+      "type": "leave_one_municipality_out",
+      "pool": [
+        "Tuxtla Gutiérrez",
+        "Suchiapa",
+        "Chiapa de Corzo",
+        "Jardines del Grijalva"
+      ],
+      "min_val_obs": 200,
+      "test": "municipalities_outside_pool",
+      "fn": "src.evaluation.splits.spatial_loo_folds"
+    },
+    "P3_grid_2x2": {
+      "type": "geo_grid",
+      "lat_median": 16.730386,
+      "lon_median": -93.089303,
+      "grid_stats": [
+        {
+          "grid_id": "0_0",
+          "n_obs": 8325,
+          "n_bssid": 4884
+        },
+        {
+          "grid_id": "0_1",
+          "n_obs": 15859,
+          "n_bssid": 7263
+        },
+        {
+          "grid_id": "1_0",
+          "n_obs": 15831,
+          "n_bssid": 14107
+        },
+        {
+          "grid_id": "1_1",
+          "n_obs": 8359,
+          "n_bssid": 5548
+        }
+      ],
+      "suggested": {
+        "train_grids": [
+          "1_0",
+          "1_1"
+        ],
+        "val_grids": [
+          "0_1"
+        ],
+        "test_grids": [
+          "0_0"
+        ]
+      },
+      "assignment": "bssid_median_latlon_one_grid",
+      "status": "stress_test",
+      "notes": "non_isolate → n_test≈0 (sin aristas train hacia OOD). subgraph=all → n_test=4733 models collapse (PR-AUC=prevalence, ROC=0.5). P3 documents an inductive limit; paper protocol = P1."
+    }
+  },
+  "gate_H_C": {
+    "description": "Gap espacial Δ = PR-AUC_temporal - PR-AUC_spatial",
+    "pass_if": "method reduces Δ by ≥10% relative vs A0 SAGE, or wins in ≥2 LOO folds",
+    "baseline_ref": "experiments/outputs/physagg + physagg/spatial"
+  },
+  "municipality_stats": [
+    {
+      "municipality": "Tuxtla Gutiérrez",
+      "n_obs": 22409,
+      "n_bssid": 18989,
+      "anomaly_rate": 0.24748984782899727,
+      "lat_mean": 16.747918495515194,
+      "lon_mean": -93.09993505729841
+    },
+    {
+      "municipality": "Suchiapa",
+      "n_obs": 11050,
+      "n_bssid": 5368,
+      "anomaly_rate": 0.21846153846153846,
+      "lat_mean": 16.617628412579187,
+      "lon_mean": -93.09206413239819
+    },
+    {
+      "municipality": "Chiapa de Corzo",
+      "n_obs": 7382,
+      "n_bssid": 4203,
+      "anomaly_rate": 0.14318612842048226,
+      "lat_mean": 16.710112290978056,
+      "lon_mean": -93.02571082931455
+    },
+    {
+      "municipality": "Jardines del Grijalva",
+      "n_obs": 3791,
+      "n_bssid": 1942,
+      "anomaly_rate": 0.040886309680823005,
+      "lat_mean": 16.73054318860459,
+      "lon_mean": -93.03558093194407
+    },
+    {
+      "municipality": "Las Flechas",
+      "n_obs": 435,
+      "n_bssid": 293,
+      "anomaly_rate": 0.10114942528735632,
+      "lat_mean": 16.69511863908046,
+      "lon_mean": -93.0243502321839
+    },
+    {
+      "municipality": NaN,
+      "n_obs": 434,
+      "n_bssid": 338,
+      "anomaly_rate": 0.10368663594470046,
+      "lat_mean": 16.622411877880186,
+      "lon_mean": -93.04780771198158
+    },
+    {
+      "municipality": "Arriaga",
+      "n_obs": 365,
+      "n_bssid": 365,
+      "anomaly_rate": 0.11506849315068493,
+      "lat_mean": 16.594129328767124,
+      "lon_mean": -93.29510410958903
+    },
+    {
+      "municipality": "Emiliano Zapata Uno",
+      "n_obs": 327,
+      "n_bssid": 114,
+      "anomaly_rate": 0.0856269113149847,
+      "lat_mean": 16.588503201834865,
+      "lon_mean": -93.05340979816515
+    },
+    {
+      "municipality": "Tapachula de Córdova y Ordóñez",
+      "n_obs": 311,
+      "n_bssid": 311,
+      "anomaly_rate": 0.13183279742765272,
+      "lat_mean": 14.920413546623793,
+      "lon_mean": -92.25582424437299
+    },
+    {
+      "municipality": "San Urbina",
+      "n_obs": 296,
+      "n_bssid": 160,
+      "anomaly_rate": 0.11148648648648649,
+      "lat_mean": 16.64991295608108,
+      "lon_mean": -93.01275055743243
+    },
+    {
+      "municipality": "Yúquiz",
+      "n_obs": 227,
+      "n_bssid": 215,
+      "anomaly_rate": 0.24669603524229075,
+      "lat_mean": 16.743843004405285,
+      "lon_mean": -93.10517274889868
+    },
+    {
+      "municipality": "Aurora Buenavista",
+      "n_obs": 176,
+      "n_bssid": 84,
+      "anomaly_rate": 0.011363636363636364,
+      "lat_mean": 16.587608403409092,
+      "lon_mean": -93.039418375
+    },
+    {
+      "municipality": "Santa Cruz",
+      "n_obs": 138,
+      "n_bssid": 138,
+      "anomaly_rate": 0.1956521739130435,
+      "lat_mean": 16.744559369565216,
+      "lon_mean": -93.10321782608695
+    },
+    {
+      "municipality": "Chiapas",
+      "n_obs": 127,
+      "n_bssid": 125,
+      "anomaly_rate": 0.07874015748031496,
+      "lat_mean": 16.712736834645668,
+      "lon_mean": -93.0279687559055
+    },
+    {
+      "municipality": "El Jobo",
+      "n_obs": 106,
+      "n_bssid": 106,
+      "anomaly_rate": 0.3018867924528302,
+      "lat_mean": 16.702193556603774,
+      "lon_mean": -93.10778631132075
+    },
+    {
+      "municipality": "Tuxtla Gutierrez Chiapas",
+      "n_obs": 93,
+      "n_bssid": 93,
+      "anomaly_rate": 0.21505376344086022,
+      "lat_mean": 16.74907469892473,
+      "lon_mean": -93.12034492473119
+    },
+    {
+      "municipality": "Santo Domingo",
+      "n_obs": 85,
+      "n_bssid": 65,
+      "anomaly_rate": 0.11764705882352941,
+      "lat_mean": 16.682213329411766,
+      "lon_mean": -93.01735161176471
+    },
+    {
+      "municipality": "Ribera Cupía",
+      "n_obs": 79,
+      "n_bssid": 67,
+      "anomaly_rate": 0.1518987341772152,
+      "lat_mean": 16.666944936708862,
+      "lon_mean": -93.0161187721519
+    },
+    {
+      "municipality": "Salvador Urbina",
+      "n_obs": 60,
+      "n_bssid": 60,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.633687266666666,
+      "lon_mean": -93.00154821666666
+    },
+    {
+      "municipality": "San Sebastián",
+      "n_obs": 59,
+      "n_bssid": 35,
+      "anomaly_rate": 0.05084745762711865,
+      "lat_mean": 16.618372491525424,
+      "lon_mean": -93.03250944067797
+    },
+    {
+      "municipality": "Hidalgo",
+      "n_obs": 52,
+      "n_bssid": 52,
+      "anomaly_rate": 0.3269230769230769,
+      "lat_mean": 16.754921480769234,
+      "lon_mean": -93.10394913461538
+    },
+    {
+      "municipality": "Francisco I. Madero",
+      "n_obs": 46,
+      "n_bssid": 44,
+      "anomaly_rate": 0.15217391304347827,
+      "lat_mean": 16.729536326086958,
+      "lon_mean": -93.10188354347827
+    },
+    {
+      "municipality": "Copoya",
+      "n_obs": 44,
+      "n_bssid": 41,
+      "anomaly_rate": 0.1590909090909091,
+      "lat_mean": 16.680013477272727,
+      "lon_mean": -93.10401940909091
+    },
+    {
+      "municipality": "Portaceli",
+      "n_obs": 29,
+      "n_bssid": 25,
+      "anomaly_rate": 0.1724137931034483,
+      "lat_mean": 16.606102655172414,
+      "lon_mean": -93.07978103448276
+    },
+    {
+      "municipality": "El Higuito",
+      "n_obs": 28,
+      "n_bssid": 28,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.781814714285712,
+      "lon_mean": -93.24038460714284
+    },
+    {
+      "municipality": "3 de Marzo",
+      "n_obs": 28,
+      "n_bssid": 21,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.72129807142857,
+      "lon_mean": -93.03400853571429
+    },
+    {
+      "municipality": "México",
+      "n_obs": 25,
+      "n_bssid": 25,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.62919716,
+      "lon_mean": -93.00006776000001
+    },
+    {
+      "municipality": "Las Brisas",
+      "n_obs": 24,
+      "n_bssid": 20,
+      "anomaly_rate": 0.041666666666666664,
+      "lat_mean": 16.614214916666665,
+      "lon_mean": -93.08935683333334
+    },
+    {
+      "municipality": "Ocozocoautla de Espinosa",
+      "n_obs": 22,
+      "n_bssid": 22,
+      "anomaly_rate": 0.18181818181818182,
+      "lat_mean": 16.768439363636364,
+      "lon_mean": -93.37781209090909
+    },
+    {
+      "municipality": "Atlixco",
+      "n_obs": 22,
+      "n_bssid": 22,
+      "anomaly_rate": 0.22727272727272727,
+      "lat_mean": 16.735167,
+      "lon_mean": -93.047036
+    },
+    {
+      "municipality": "Fraccionamiento Villa Real",
+      "n_obs": 21,
+      "n_bssid": 18,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.712195476190477,
+      "lon_mean": -93.03382633333334
+    },
+    {
+      "municipality": "CHIAPAS",
+      "n_obs": 18,
+      "n_bssid": 13,
+      "anomaly_rate": 0.2222222222222222,
+      "lat_mean": 16.71159983333333,
+      "lon_mean": -93.01980822222222
+    },
+    {
+      "municipality": "12 de Marzo",
+      "n_obs": 14,
+      "n_bssid": 9,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.63528835714286,
+      "lon_mean": -93.01883621428571
+    },
+    {
+      "municipality": "mexico",
+      "n_obs": 13,
+      "n_bssid": 13,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.732252,
+      "lon_mean": -93.035355
+    },
+    {
+      "municipality": "Mexico",
+      "n_obs": 10,
+      "n_bssid": 10,
+      "anomaly_rate": 0.2,
+      "lat_mean": 16.735746499999998,
+      "lon_mean": -93.04669550000001
+    },
+    {
+      "municipality": "Александрувка",
+      "n_obs": 9,
+      "n_bssid": 9,
+      "anomaly_rate": 0.1111111111111111,
+      "lat_mean": 16.73359166666667,
+      "lon_mean": -93.05195699999999
+    },
+    {
+      "municipality": "Bochil",
+      "n_obs": 8,
+      "n_bssid": 8,
+      "anomaly_rate": 0.25,
+      "lat_mean": 16.663341250000002,
+      "lon_mean": -93.015954875
+    },
+    {
+      "municipality": "Rural",
+      "n_obs": 3,
+      "n_bssid": 3,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.601516,
+      "lon_mean": -93.03954700000001
+    },
+    {
+      "municipality": "Berriozábal",
+      "n_obs": 3,
+      "n_bssid": 3,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.636017,
+      "lon_mean": -93.09326800000001
+    },
+    {
+      "municipality": "Sacramento de Jesús",
+      "n_obs": 2,
+      "n_bssid": 2,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.727248,
+      "lon_mean": -93.047937
+    },
+    {
+      "municipality": "El Potrerón",
+      "n_obs": 2,
+      "n_bssid": 2,
+      "anomaly_rate": 0.5,
+      "lat_mean": 16.606713,
+      "lon_mean": -93.041368
+    },
+    {
+      "municipality": "San Juditas",
+      "n_obs": 1,
+      "n_bssid": 1,
+      "anomaly_rate": 0.0,
+      "lat_mean": 16.672931,
+      "lon_mean": -93.096532
+    }
+  ],
+  "models_to_score": [
+    "A0",
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "entrypoints": {
+    "physagg_spatial": "python -m src.train.physagg --run all --split spatial --output experiments/outputs/physagg/spatial",
+    "ood_report": "python -m src.train.ood_eval",
+    "rebuild_manifest": "python scripts/build_spatial_ood_manifest.py"
+  }
+}

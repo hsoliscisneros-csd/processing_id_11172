@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Local experiment outputs / caches
+experiments/outputs/
+reports/figures/
+*.log
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# Secrets / local overrides (never publish)
+*.pem
+*.key
+secrets.*
+credentials.*
+salt*
+*.salt
+
+# Large local artefacts not part of the release
+*.ckpt
+*.pt
+*.pth
+wandb/
+mlruns/
+dvc/
+.dvc/

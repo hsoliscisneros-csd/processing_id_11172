@@ -1,0 +1,44 @@
+# EXP-06 LOO municipality validation (lambda selection)
+input: data/datos_wifi_curated_anon.parquet
+graph_dir: data/graphs/physical
+output_dir: experiments/outputs/gnn/pignn/spatial_loo
+
+split: spatial
+run_loo: true
+loo_only: true
+loo_min_val_obs: 500
+
+spatial:
+  state: Chiapas
+  train_municipalities:
+    - Tuxtla Gutiérrez
+    - Suchiapa
+    - Chiapa de Corzo
+    - Jardines del Grijalva
+  val_municipalities: []
+
+model: sage
+features: graph
+subgraph: non_isolate
+edge_mode: train
+edge_weight: combined
+
+epochs: 150
+patience: 15
+lr: 0.001
+hidden: 64
+seed: 42
+
+variants:
+  A0:
+    lambda_physics: 0.0
+    lambda_smooth: 0.0
+  P1:
+    lambda_physics: 0.03
+    lambda_smooth: 0.01
+  P2:
+    lambda_physics: 0.1
+    lambda_smooth: 0.0
+  P3:
+    lambda_physics: 0.3
+    lambda_smooth: 0.01
