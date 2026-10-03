@@ -23,7 +23,11 @@ env/
 */.ipynb_checkpoints/
 
 # Local experiment outputs / caches
-experiments/outputs/
+# Keep compact metric JSON used by the PhysAgg notebook; ignore bulky artefacts.
+experiments/outputs/**/pred_*.json
+experiments/outputs/**/*.pt
+experiments/outputs/**/*.pth
+experiments/outputs/**/*.ckpt
 data/graphs/
 reports/figures/
 *.log

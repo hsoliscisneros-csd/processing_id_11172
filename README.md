@@ -29,8 +29,9 @@ jupyter notebook notebooks/01_eda_wifi.ipynb
 
 ### Reproduce PhysAgg-R
 
-Open `notebooks/03_reproduce_physagg.ipynb`, set `RUN_TRAINING = True`, and run all cells.
-Or use the CLI directly:
+`notebooks/03_reproduce_physagg.ipynb` loads the released metric tables under
+`experiments/outputs/physagg_power/`. To retrain from scratch, set
+`RUN_TRAINING = True` in that notebook, or use the CLI:
 
 ```bash
 python -m src.graphs.build --input data/datos_wifi_curated_anon.parquet --output data/graphs

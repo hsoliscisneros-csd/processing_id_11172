@@ -1,0 +1,64 @@
+{
+  "split": "spatial",
+  "spatial_val": "robust",
+  "subgraph": "non_isolate",
+  "edge_weight": "combined",
+  "seeds": [
+    42
+  ],
+  "summary": [
+    {
+      "run": "A0",
+      "n_seeds": 1,
+      "pr_auc_mean": 0.6275428010313538,
+      "pr_auc_std": 0.0,
+      "f1_mean": 0.46017699115044247,
+      "f1_std": 0.0
+    },
+    {
+      "run": "A1",
+      "n_seeds": 1,
+      "pr_auc_mean": 0.597024951612463,
+      "pr_auc_std": 0.0,
+      "f1_mean": 0.48387096774193544,
+      "f1_std": 0.0
+    },
+    {
+      "run": "A2",
+      "n_seeds": 1,
+      "pr_auc_mean": 0.5757762521347872,
+      "pr_auc_std": 0.0,
+      "f1_mean": 0.4583333333333333,
+      "f1_std": 0.0
+    },
+    {
+      "run": "A2e",
+      "n_seeds": 1,
+      "pr_auc_mean": 0.5814191863896802,
+      "pr_auc_std": 0.0,
+      "f1_mean": 0.44324324324324327,
+      "f1_std": 0.0
+    },
+    {
+      "run": "A3",
+      "n_seeds": 1,
+      "pr_auc_mean": 0.6246649874854424,
+      "pr_auc_std": 0.0,
+      "f1_mean": 0.4505928853754941,
+      "f1_std": 0.0
+    }
+  ],
+  "mcnemar": {
+    "b": 20,
+    "c": 39,
+    "n_discordant": 59,
+    "statistic": 5.491525423728813,
+    "p_value": 0.019108863644740515,
+    "method": "chi2_cc",
+    "pair": [
+      "A2e",
+      "A0"
+    ]
+  },
+  "source_note": "Copied from local physagg_power/spatial_robust manuscript hold-out run."
+}

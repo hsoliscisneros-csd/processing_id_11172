@@ -1,0 +1,39 @@
+{
+  "run": "A0",
+  "seed": 42,
+  "threshold": 0.5800771161913871,
+  "metrics": {
+    "f1": 0.7623066104078762,
+    "precision": 0.7923976608187134,
+    "recall": 0.7344173441734417,
+    "roc_auc": 0.9487772743340082,
+    "pr_auc": 0.8779881362481221,
+    "mcc": 0.6971562131293674,
+    "threshold": 0.5800771161913871,
+    "n_nodes_test": 1634,
+    "n_edges": 11599,
+    "edge_mode": "train",
+    "subgraph_mode": "non_isolate",
+    "edge_weight_mode": "combined",
+    "graph_stats": {
+      "n_nodes": 3576,
+      "n_edges": 11599,
+      "n_components": 550,
+      "avg_degree": 6.487136465324385,
+      "max_degree": 60
+    }
+  },
+  "layered": {
+    "threshold": 0.5800771161913871,
+    "full": {
+      "pr_auc": 0.8779881362481221,
+      "f1": 0.7623066104078762,
+      "n": 1634
+    },
+    "connected": {
+      "pr_auc": 0.8779881362481221,
+      "f1": 0.7623066104078762,
+      "n": 1634
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "split": "temporal",
+  "spatial_val": null,
+  "subgraph": "non_isolate",
+  "edge_weight": "combined",
+  "seeds": [
+    42,
+    0,
+    1,
+    2,
+    3
+  ],
+  "summary": [
+    {
+      "run": "A0",
+      "n_seeds": 5,
+      "pr_auc_mean": 0.8795045521572575,
+      "pr_auc_std": 0.0020149282937657865,
+      "f1_mean": 0.7650421860347197,
+      "f1_std": 0.009481386793479712
+    },
+    {
+      "run": "A1",
+      "n_seeds": 5,
+      "pr_auc_mean": 0.8228771137335332,
+      "pr_auc_std": 0.03363163869185599,
+      "f1_mean": 0.7266142295270035,
+      "f1_std": 0.022250719521601982
+    },
+    {
+      "run": "A2",
+      "n_seeds": 5,
+      "pr_auc_mean": 0.8795721649343042,
+      "pr_auc_std": 0.0025361893480544207,
+      "f1_mean": 0.7624123661664857,
+      "f1_std": 0.008146654271731089
+    },
+    {
+      "run": "A2e",
+      "n_seeds": 5,
+      "pr_auc_mean": 0.8858323344181553,
+      "pr_auc_std": 0.004677720546254287,
+      "f1_mean": 0.7697363499763018,
+      "f1_std": 0.010450388675839806
+    },
+    {
+      "run": "A3",
+      "n_seeds": 5,
+      "pr_auc_mean": 0.8795703931343558,
+      "pr_auc_std": 0.004822747913596562,
+      "f1_mean": 0.7692758974725927,
+      "f1_std": 0.007846683913068678
+    }
+  ],
+  "mcnemar": null,
+  "source_note": "Aggregated from local physagg_power temporal multi-seed campaigns used for the manuscript tables."
+}
