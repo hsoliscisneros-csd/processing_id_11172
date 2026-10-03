@@ -52,6 +52,5 @@
       "f1_std": 0.007846683913068678
     }
   ],
-  "mcnemar": null,
-  "source_note": "Aggregated from local physagg_power temporal multi-seed campaigns used for the manuscript tables."
+  "mcnemar": null
 }
