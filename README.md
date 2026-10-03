@@ -13,7 +13,7 @@ Companion code and anonymised data for IEEE Latin America Transactions manuscrip
 | `data/qc_report.json` | QC summary for the released parquet |
 | `notebooks/01_eda_wifi.ipynb` | EDA on the released parquet (executed outputs) |
 | `notebooks/02_paper_results_view.ipynb` | Recomputes isolation + public-column RF ablation from the package |
-| `notebooks/03_reproduce_physagg.ipynb` | Conductor notebook (B) that calls the PhysAgg CLI (A) |
+| `notebooks/03_reproduce_physagg.ipynb` | Builds the graph and runs PhysAgg-R paper recipes |
 | `src/` | Minimal training/evaluation source used in the paper |
 | `experiments/configs`, `experiments/manifests` | Experiment configuration |
 | `experiments/EXPERIMENT_LOG.md` | Short English experiment notes for the paper |
@@ -27,13 +27,10 @@ pip install -r requirements.txt
 jupyter notebook notebooks/01_eda_wifi.ipynb
 ```
 
-### Reproduce PhysAgg-R (B + A)
+### Reproduce PhysAgg-R
 
-1. Open `notebooks/03_reproduce_physagg.ipynb`.
-2. Set `RUN_TRAINING = True`.
-3. Run all cells (builds `data/graphs/physical`, then launches the paper CLI recipes).
-
-Equivalent CLI:
+Open `notebooks/03_reproduce_physagg.ipynb`, set `RUN_TRAINING = True`, and run all cells.
+Or use the CLI directly:
 
 ```bash
 python -m src.graphs.build --input data/datos_wifi_curated_anon.parquet --output data/graphs
